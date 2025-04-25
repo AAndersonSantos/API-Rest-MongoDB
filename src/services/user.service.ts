@@ -5,4 +5,8 @@ export class UserService {
     const user = new User(userData);
     return await user.save();
   }
+
+  async getUsers() {
+    return await User.find();
+  }
 }

@@ -14,5 +14,15 @@ export class UserController {
       res.status(400).json({ error: (error as Error).message });
     }
   }
+
+  async getUser(req: Request, res: Response) {
+    try {
+        const user = await userService.getUsers();
+        res.status(201).json(user);
   
+      } catch (error) {
+        res.status(400).json({ error: (error as Error).message });
+      }
+  }
+
 }
