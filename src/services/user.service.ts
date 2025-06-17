@@ -1,12 +1,21 @@
 import mongoose from "mongoose";
 import { User } from "../models/user.model";
+import bcrypt from 'bcrypt';
 export class UserService {
-  async createUser(userData: {
-    name: string;
-    email: string;
-    password: string;
-  }) {
-    const user = new User(userData);
+  
+  async createUser(userData: {name: string; email: string; password: string; role: string}) {
+
+    const { name, email, password, role } = userData;
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const user = new User({
+      name,
+      email,
+      password: hashedPassword,
+      role: role || 'viewer'
+    });
+
     return await user.save();
   }
 
